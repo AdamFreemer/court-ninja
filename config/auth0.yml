@@ -1,0 +1,6 @@
+# ./config/auth0.yml
+development:
+  auth0_domain: court-ninja.us.auth0.com
+  auth0_client_id: t8hb1Z83P4PByM1N5Tq4ySrqi7v7U9fv
+  auth0_client_secret: Ga1VOyCY1IhbEL3L9Wzrn8_CbnccamRgIW4mj-Pup-5I9C9AFZwHpA183eOH3gyU
+  # auth0_client_secret: ENV['AUTH0_SECRET']

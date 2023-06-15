@@ -1,19 +1,39 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>CourtNinja</title>
+    <% if action_name == "display" && @tournament.courts > 1 %>
+      <title>TC | Court #<%= params[:court] %></title>
+    <% else %>
+      <title>Court Ninja</title>
+    <% end %>  
+
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
     <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
-
+    <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
+
+    <script src="https://kit.fontawesome.com/c3813532fc.js" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://unpkg.com/flowbite@1.5.3/dist/flowbite.min.css" />
+    <script src="https://unpkg.com/flowbite@1.5.3/dist/flowbite.js"></script>    
   </head>
 
   <body>
-    <main class="container mx-auto mt-28 px-5 flex">
+    <% if session[:userinfo].present? %>
+      <% if action_name == "display" || action_name == "results" %>
+        <%= render 'layouts/headerless' %>
+      <% else %>
+        <%= render 'layouts/header' %>
+      <% end %>
+      <main class="px-8 py-4">
+        <%= render 'layouts/alerts' %>
+        <%= yield %>
+      </main>
+    <% else %>
       <%= yield %>
-    </main>
+    <% end %>
   </body>
 </html>
