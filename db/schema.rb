@@ -10,13 +10,59 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_06_13_033647) do
+ActiveRecord::Schema[7.0].define(version: 2023_06_16_004429) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "users", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+  create_table "email_verification_tokens", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.index ["user_id"], name: "index_email_verification_tokens_on_user_id"
   end
 
+  create_table "password_reset_tokens", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.index ["user_id"], name: "index_password_reset_tokens_on_user_id"
+  end
+
+  create_table "sessions", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.string "user_agent"
+    t.string "ip_address"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_sessions_on_user_id"
+  end
+
+  create_table "users", force: :cascade do |t|
+    t.string "email", null: false
+    t.string "password_digest", null: false
+    t.boolean "verified", default: false, null: false
+    t.string "encrypted_password", default: "", null: false
+    t.string "first_name"
+    t.string "last_name"
+    t.string "address"
+    t.string "city"
+    t.string "state"
+    t.string "zip"
+    t.string "phone_number"
+    t.string "jersey_number"
+    t.string "position"
+    t.string "gender"
+    t.string "contact_1_name"
+    t.string "contact_1_phone"
+    t.string "contact_1_address"
+    t.string "contact_2_name"
+    t.string "contact_2_phone"
+    t.string "contact_2_address"
+    t.boolean "is_admin", default: false
+    t.boolean "is_player", default: false
+    t.boolean "is_ghost_player", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["email"], name: "index_users_on_email", unique: true
+  end
+
+  add_foreign_key "email_verification_tokens", "users"
+  add_foreign_key "password_reset_tokens", "users"
+  add_foreign_key "sessions", "users"
 end
