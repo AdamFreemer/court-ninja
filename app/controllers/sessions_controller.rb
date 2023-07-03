@@ -8,6 +8,8 @@ class SessionsController < ApplicationController
   end
 
   def new
+    @logged_in == true if Session.find_by_id(cookies.signed[:session_token])
+    # binding.pry
   end
 
   def create
