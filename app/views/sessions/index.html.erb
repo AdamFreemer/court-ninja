@@ -1,34 +1,30 @@
-<p style="color: green"><%= notice %></p>
+<div class="p-6 space-y-4 sm:p-8">
+  <p style="color: green"><%= notice %></p>
 
-<h1>Devices & Sessions</h1>
+  <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl">Devices & Sessions</h1>
 
-<div id="sessions">
-  <% @sessions.each do |session| %>
-    <div id="<%= dom_id session %>">
-      <p>
-        <strong>User Agent:</strong>
-        <%= session.user_agent %>
-      </p>
+  <div id="sessions">
+    <% @sessions.each do |session| %>
+      <div id="<%= dom_id session %>">
+        <p>
+          <strong>User Agent:</strong>
+          <%= session.user_agent %>
+        </p>
 
-      <p>
-        <strong>Ip Address:</strong>
-        <%= session.ip_address %>
-      </p>
+        <p>
+          <strong>Ip Address:</strong>
+          <%= session.ip_address %>
+        </p>
 
-      <p>
-        <strong>Created at:</strong>
-        <%= session.created_at %>
-      </p>
+        <p>
+          <strong>Created at:</strong>
+          <%= session.created_at %>
+        </p>
 
-    </div>
-    <p>
-      <%= button_to "Log out", session, method: :delete %>
-    </p>
-  <% end %>
+      </div>
+    <% end %>
+  </div>
 </div>
 
-<br>
 
-<div>
-  <%= link_to "Back", root_path %>
-</div>
+

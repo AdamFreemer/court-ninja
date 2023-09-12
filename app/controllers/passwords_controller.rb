@@ -17,6 +17,7 @@ class PasswordsController < ApplicationController
   private
     def set_user
       @user = Current.user
+      @logged_in = true if Session.find_by_id(cookies.signed[:session_token])
     end
 
     def user_params

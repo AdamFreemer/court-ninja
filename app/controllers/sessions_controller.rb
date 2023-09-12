@@ -2,14 +2,13 @@ class SessionsController < ApplicationController
   skip_before_action :authenticate, only: %i[ new create ]
 
   before_action :set_session, only: :destroy
+  before_action :logged_in
 
   def index
     @sessions = Current.user.sessions.order(created_at: :desc)
   end
 
   def new
-    @logged_in == true if Session.find_by_id(cookies.signed[:session_token])
-    # binding.pry
   end
 
   def create
@@ -19,9 +18,9 @@ class SessionsController < ApplicationController
       @session = user.sessions.create!
       cookies.signed.permanent[:session_token] = { value: @session.id, httponly: true }
 
-      redirect_to root_path, notice: "Signed in successfully"
+      redirect_to root_path, notice: "Signed in successfully."
     else
-      redirect_to sign_in_path(email_hint: params[:email]), alert: "That email or password is incorrect"
+      redirect_to sign_in_path(email_hint: params[:email]), alert: "That email and password combination are not valid."
     end
   end
 
@@ -32,5 +31,9 @@ class SessionsController < ApplicationController
   private
     def set_session
       @session = Current.user.sessions.find(params[:id])
+    end
+
+    def logged_in
+      @logged_in = true if Session.find_by_id(cookies.signed[:session_token])
     end
 end
